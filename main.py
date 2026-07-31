@@ -37,18 +37,18 @@ async def main() -> None:
     session = AiohttpSession(proxy="http://user385924:x0wdeh@84.32.156.9:3166")
     bot = Bot(token=settings.bot_token, session=session, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher(storage=MemoryStorage())
+
+    dp["repo"] = repository
+    dp["conversation_service"] = conversation_service
+    dp["prompt_service"] = prompt_service
+    dp["lead_service"] = lead_service
+    dp["ai_service"] = ai_service
+    dp["settings"] = settings
+
     dp.include_router(main_router)
 
     try:
-        await dp.start_polling(
-            bot,
-            repository=repository,
-            prompt_service=prompt_service,
-            conversation_service=conversation_service,
-            lead_service=lead_service,
-            ai_service=ai_service,
-            settings=settings,
-        )
+        await dp.start_polling(bot)
     finally:
         await ai_service.aclose()
         await session.close()
