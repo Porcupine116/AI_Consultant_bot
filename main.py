@@ -35,9 +35,16 @@ async def main() -> None:
     ai_service = AIService(settings)
 
     session = AiohttpSession(proxy="http://user385924:x0wdeh@84.32.156.9:3166")
-    bot = Bot(token=settings.bot_token, session=session, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+
+    bot = Bot(
+        token=settings.bot_token,
+        session=session,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
+
     dp = Dispatcher(storage=MemoryStorage())
 
+    # передаем зависимости для handler'ов
     dp["repo"] = repository
     dp["conversation_service"] = conversation_service
     dp["prompt_service"] = prompt_service
