@@ -5,6 +5,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession
+from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
@@ -34,7 +35,7 @@ async def main() -> None:
     ai_service = AIService(settings)
 
     session = AiohttpSession(proxy="http://user385924:x0wdeh@84.32.156.9:3166")
-    bot = Bot(token=settings.bot_token, session=session, parse_mode=ParseMode.HTML)
+    bot = Bot(token=settings.bot_token, session=session, default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(main_router)
 
