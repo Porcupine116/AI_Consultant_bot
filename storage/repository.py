@@ -62,7 +62,11 @@ class Repository:
 
     async def get_conversation(self, chat_id: int) -> ConversationRecord:
         async with self.db.connect() as conn:
-            row = await conn.execute_fetchone("SELECT * FROM conversations WHERE chat_id = ?", (chat_id,))
+            cursor = await conn.execute(
+                "SELECT * FROM conversations WHERE chat_id = ?",
+                (chat_id,),
+            )
+            row = await cursor.fetchone()
         if row is None:
             return ConversationRecord(chat_id=chat_id)
         return ConversationRecord(
@@ -179,7 +183,11 @@ class Repository:
 
     async def get_lead(self, chat_id: int) -> LeadRecord | None:
         async with self.db.connect() as conn:
-            row = await conn.execute_fetchone("SELECT * FROM leads WHERE chat_id = ?", (chat_id,))
+            cursor = await conn.execute(
+                "SELECT * FROM leads WHERE chat_id = ?",
+                (chat_id,),
+            )
+            row = await cursor.fetchone()
         if row is None:
             return None
         return LeadRecord(
