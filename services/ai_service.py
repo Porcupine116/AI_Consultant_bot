@@ -57,7 +57,7 @@ class AIService:
 
         proxy = settings.proxy_url()
         if proxy:
-            kwargs["proxy"] = proxy.get("https://") or proxies.get("http://")
+            kwargs["proxy"] = proxy
 
         self._client = httpx.AsyncClient(
             base_url=settings.openrouter_base_url.rstrip("/"),
