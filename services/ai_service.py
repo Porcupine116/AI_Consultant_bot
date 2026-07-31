@@ -44,15 +44,24 @@ class AISummaryResult:
 class AIService:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
-        self._client = httpx.AsyncClient(
-            base_url=settings.openrouter_base_url.rstrip("/"),
-            timeout=httpx.Timeout(settings.request_timeout),
-            headers={
+
+        kwargs = {
+            "timeout": httpx.Timeout(settings.request_timeout),
+            "headers": {
                 "Authorization": f"Bearer {settings.openrouter_api_key}",
                 "Content-Type": "application/json",
-                "X-Title": settings.app_name,
+                "HTTP-Referer": "https://localhost",
+                "X-Title": "AI Consultant Bot",
             },
-            trust_env=True,
+        }
+
+        proxies = settings.proxies()
+        if proxies:
+            kwargs["proxy"] = proxies.get("https://") or proxies.get("http://")
+
+        self._client = httpx.AsyncClient(
+            base_url=settings.openrouter_base_url.rstrip("/"),
+            **kwargs,
         )
 
     async def aclose(self) -> None:
