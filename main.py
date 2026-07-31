@@ -33,7 +33,7 @@ async def main() -> None:
     lead_service = LeadService(repository, settings)
     ai_service = AIService(settings)
 
-    session = AiohttpSession(proxy=settings.proxy_url())
+    session = AiohttpSession(proxy="http://user385924:x0wdeh@84.32.156.9:3166")
     bot = Bot(token=settings.bot_token, session=session, parse_mode=ParseMode.HTML)
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(main_router)
