@@ -34,7 +34,7 @@ async def main() -> None:
     lead_service = LeadService(repository, settings)
     ai_service = AIService(settings)
 
-    session = AiohttpSession(proxy="http://user385924:x0wdeh@84.32.156.9:3166")
+    session = AiohttpSession(proxy="http://user385924:x0wdeh@84.32.156.117:8641")
 
     bot = Bot(
         token=settings.bot_token,
