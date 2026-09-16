@@ -7,11 +7,11 @@ def consult_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text="👤 Оператор", callback_data="consult:operator"),
-                InlineKeyboardButton(text="📞 Контакты", callback_data="consult:contacts"),
+                InlineKeyboardButton(text="📞 Мои контакты", callback_data="consult:contacts"),
+                InlineKeyboardButton(text="👤 Связаться со специалистом", callback_data="consult:operator"),
             ],
             [
-                InlineKeyboardButton(text="❌ Отменить", callback_data="consult:cancel"),
+                InlineKeyboardButton(text="↩️ Начать заново", callback_data="consult:cancel"),
             ],
         ]
     )

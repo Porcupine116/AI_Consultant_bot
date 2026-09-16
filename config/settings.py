@@ -18,9 +18,19 @@ class Settings(BaseSettings):
 
     http_proxy: Optional[str] = Field(default=None, validation_alias="HTTP_PROXY")
     https_proxy: Optional[str] = Field(default=None, validation_alias="HTTPS_PROXY")
+    telegram_proxy: Optional[str] = Field(default=None, validation_alias="TELEGRAM_PROXY")
 
     default_language: str = Field(default="ru", validation_alias="DEFAULT_LANGUAGE")
-    default_tone: str = Field(default="естественный, спокойный, уверенный", validation_alias="DEFAULT_TONE")
+    default_tone: str = Field(
+        default="живой, доброжелательный, спокойный, уверенный",
+        validation_alias="DEFAULT_TONE",
+    )
+
+    company_name: str = Field(default="Консультация по ДТП", validation_alias="COMPANY_NAME")
+    contact_phone: Optional[str] = Field(default=None, validation_alias="CONTACT_PHONE")
+    contact_telegram: Optional[str] = Field(default=None, validation_alias="CONTACT_TELEGRAM")
+    contact_website: Optional[str] = Field(default=None, validation_alias="CONTACT_WEBSITE")
+    contact_address: Optional[str] = Field(default=None, validation_alias="CONTACT_ADDRESS")
 
     admin_chat_id: Optional[int] = Field(default=None, validation_alias="ADMIN_CHAT_ID")
     lead_channel_id: Optional[str] = Field(default=None, validation_alias="LEAD_CHANNEL_ID")

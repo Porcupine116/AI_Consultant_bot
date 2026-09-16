@@ -24,8 +24,16 @@ class LeadService:
         status: str | None = None,
     ) -> LeadRecord:
         context = snapshot.context
-        summary = ai_result.summary if ai_result else ""
-        next_step = ai_result.recommended_next_step if ai_result else snapshot.current_question
+
+        existing = await self.repository.get_lead(chat_id) if ai_result is None else None
+        summary = ai_result.summary if ai_result else (existing.summary if existing else "")
+        next_step = (
+            ai_result.recommended_next_step
+            if ai_result
+            else (existing.next_step if existing else snapshot.current_question)
+        )
+        ai_comment = ai_result.comment if ai_result else (existing.ai_comment if existing else "")
+
         lead = LeadRecord(
             chat_id=chat_id,
             name=context.get("name"),
@@ -40,7 +48,7 @@ class LeadService:
             perspective=snapshot.perspective,
             documents=context.get("documents"),
             next_step=next_step,
-            ai_comment=ai_result.comment if ai_result else "",
+            ai_comment=ai_comment,
             status=status or ("handoff" if snapshot.handed_off else "new"),
             handed_off=snapshot.handed_off,
             operator_note=operator_note,

@@ -10,5 +10,3 @@ class Consultation(StatesGroup):
 class ContactForm(StatesGroup):
     name = State()
     phone = State()
-    telegram = State()
-    time = State()

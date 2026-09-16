@@ -33,6 +33,29 @@ def format_status_card(stage: str, urgency: str, perspective: str, context: dict
     return "\n".join(lines)
 
 
+def format_company_contacts(
+    company_name: str,
+    phone: str | None,
+    telegram: str | None,
+    website: str | None,
+    address: str | None,
+) -> str:
+    lines = [f"<b>{html_escape(company_name)}</b>", "", "Связаться с нами:"]
+    if phone:
+        lines.append(f"📞 Телефон: {html_escape(phone)}")
+    if telegram:
+        value = telegram if telegram.startswith("@") else f"@{telegram}"
+        lines.append(f"✈️ Telegram: {html_escape(value)}")
+    if website:
+        lines.append(f"🌐 Сайт: {html_escape(website)}")
+    if address:
+        lines.append(f"📍 Адрес: {html_escape(address)}")
+
+    if len(lines) == 3:
+        lines.extend(["", "Контакты пока не настроены в конфигурации бота."])
+    return "\n".join(lines)
+
+
 def format_consult_reply(
     reply: str,
     next_question: str = "",
@@ -41,15 +64,12 @@ def format_consult_reply(
 ) -> str:
     parts = [reply.strip()]
     if next_question:
-        parts.append("")
         parts.append(next_question.strip())
     if ask_contacts:
-        parts.append("")
-        parts.append("Если удобно, оставьте имя и телефон — я передам всё специалисту.")
+        parts.append("Если удобно, оставьте имя и телефон — передам обращение специалисту.")
     if needs_operator:
-        parts.append("")
-        parts.append("Если хотите, могу сразу передать диалог человеку.")
-    return "\n".join(part for part in parts if part)
+        parts.append("Могу передать обращение специалисту.")
+    return "\n\n".join(part for part in parts if part)
 
 
 def format_command_help() -> str:
@@ -57,10 +77,10 @@ def format_command_help() -> str:
         "<b>Команды</b>\n"
         "/start — начать диалог\n"
         "/consult — консультация\n"
-        "/contacts — оставить контакты\n"
+        "/contacts — контакты компании\n"
         "/status — статус обращения\n"
         "/history — история диалога\n"
-        "/operator — передать специалисту\n"
+        "/operator — связаться со специалистом\n"
         "/cancel — отменить текущий сценарий\n"
         "/help — помощь"
     )

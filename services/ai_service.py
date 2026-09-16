@@ -67,7 +67,7 @@ class AIService:
     async def aclose(self) -> None:
         await self._client.aclose()
 
-    async def chat_consultation(self, messages: list[dict[str, str]]) -> AIConsultationResult:
+    async def chat_consultation(self, messages: list[dict[str, Any]]) -> AIConsultationResult:
         payload = {
             "model": self.settings.openrouter_model,
             "messages": messages,
@@ -92,7 +92,7 @@ class AIService:
             )
         return AIConsultationResult(reply=text.strip(), raw_text=text)
 
-    async def chat_summary(self, messages: list[dict[str, str]]) -> AISummaryResult:
+    async def chat_summary(self, messages: list[dict[str, Any]]) -> AISummaryResult:
         payload = {
             "model": self.settings.openrouter_model,
             "messages": messages,
